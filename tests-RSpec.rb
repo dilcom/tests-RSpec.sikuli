@@ -1,100 +1,100 @@
 require "rspec"
 
 def text_select
-  $SIKULI_SCREEN.click("1400351083105.png")
-  $SIKULI_SCREEN.hover(Pattern("1400351083105.png").targetOffset(-23,18))
-  $SIKULI_SCREEN.mouseDown(Button.LEFT)
-  $SIKULI_SCREEN.hover(Pattern("1400351093763.png").targetOffset(-29,-23))
-  $SIKULI_SCREEN.mouseUp(Button.LEFT)
+  click("1400351083105.png")
+  hover(Pattern("1400351083105.png").targetOffset(-23,18))
+  mouseDown(Button.LEFT)
+  hover(Pattern("1400351093763.png").targetOffset(-29,-23))
+  mouseUp(Button.LEFT)
 end
 
 def clear
-  $SIKULI_SCREEN.click("1400320382234.png")
-  $SIKULI_SCREEN.click("1400320394450.png")
-  if $SIKULI_SCREEN.exists("1400320449100.png") then
-    $SIKULI_SCREEN.click("1400320432142.png")
+  click("1400320382234.png")
+  click("1400320394450.png")
+  if exists("1400320449100.png") then
+    click("1400320432142.png")
   end
 end
 
 def open_test_doc
-  $SIKULI_SCREEN.click("1400932362080.png")
-  $SIKULI_SCREEN.hover("1400932378494.png")
-  $SIKULI_SCREEN.click("1400932390382.png")
+  click("1400932362080.png")
+  hover("1400932378494.png")
+  click("1400932390382.png")
 end
 
 shared_examples_for "clickable" do |pattern, click_pattern|
   it "should responce to click" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.wait(click_pattern, 5)).to_not raise_exception
+    click(pattern)
+    expect(wait(click_pattern, 5)).to_not raise_exception
   end
 end
 
 shared_examples_for "dblclickable" do |pattern, click_pattern|
   it "should responce to double click" do
-    $SIKULI_SCREEN.doubleClick(pattern)
-    expect($SIKULI_SCREEN.wait(click_pattern, 5)).to_not raise_exception
+    doubleClick(pattern)
+    expect(wait(click_pattern, 5)).to_not raise_exception
   end
 end
 
 shared_examples_for "unchecked checkable" do |pattern, result|
   it "should be checked" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.wait(result, 5)).to_not raise_exception
+    click(pattern)
+    expect(wait(result, 5)).to_not raise_exception
   end
   it "then unchecked" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.waitVanish(result, 5)).to_not raise_exception
+    click(pattern)
+    expect(waitVanish(result, 5)).to_not raise_exception
   end
   it "and checked again" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.wait(result, 5)).to_not raise_exception
+    click(pattern)
+    expect(wait(result, 5)).to_not raise_exception
   end
 end
 
 shared_examples_for "checked checkable" do |pattern, result|
   it "should be unchecked" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.waitVanish(result, 5)).to_not raise_exception
+    click(pattern)
+    expect(waitVanish(result, 5)).to_not raise_exception
   end
   it "and checked again" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.wait(result, 5)).to_not raise_exception
+    click(pattern)
+    expect(wait(result, 5)).to_not raise_exception
   end
 end
 
 shared_examples_for "clickable and hides something" do |pattern, click_pattern|
   it "should responce to click" do
-    $SIKULI_SCREEN.click(pattern)
-    expect($SIKULI_SCREEN.waitVanish(click_pattern, 3)).to_not raise_exception
+    click(pattern)
+    expect(waitVanish(click_pattern, 3)).to_not raise_exception
   end
 end
 
 shared_examples_for "text edit field" do |pattern, text, pattern_effect|
   it "should be editable" do
-    $SIKULI_SCREEN.doubleClick(pattern)
-    $SIKULI_SCREEN.paste(text)
-    expect($SIKULI_SCREEN.find(pattern_effect)).to_not raise_exception
+    doubleClick(pattern)
+    paste(text)
+    expect(find(pattern_effect)).to_not raise_exception
   end
 end
 
 shared_context "clickable container" do |pattern|
   before :each, :open => :yes do
-    $SIKULI_SCREEN.click(pattern)
+    click(pattern)
   end
 end
 
 shared_context "window" do |pattern, confirm|
   before :each, :open => :yes do
-    $SIKULI_SCREEN.click(pattern)
+    click(pattern)
   end
   after :each, :open => :yes do
-    $SIKULI_SCREEN.click(confirm)
+    click(confirm)
   end
 end
 
 shared_context "hoverable menu" do |pattern|
   before :each, :open => :yes do
-    $SIKULI_SCREEN.hover(pattern)
+    hover(pattern)
   end
 end
 
@@ -157,7 +157,7 @@ describe "Format menu", :open => :yes, :text_select => :yes do
       end
       context "after all changes", :open => :no, :text_select => :no do
         it "should be different" do
-          expect($SIKULI_SCREEN.wait("1400358194577.png", 2)).to_not raise_exception
+          expect(wait("1400358194577.png", 2)).to_not raise_exception
         end
       end
     end
@@ -166,12 +166,12 @@ describe "Format menu", :open => :yes, :text_select => :yes do
       include_context "clickable container", "1400404561637.png"
       context "until any line choosed", :text_select => :no do
         it "should not enable color selection" do
-          $SIKULI_SCREEN.click("1400404582783.png")
-          expect($SIKULI_SCREEN.waitVanish("1400404617207.png", 1)).to_not raise_exception
+          click("1400404582783.png")
+          expect(waitVanish("1400404617207.png", 1)).to_not raise_exception
         end
         it "should not enable words only checkbox" do
-          $SIKULI_SCREEN.click("1400405546024.png")
-          expect($SIKULI_SCREEN.waitVanish(Pattern("1400405555220.png").similar(0.90), 1)).to_not raise_exception
+          click("1400405546024.png")
+          expect(waitVanish(Pattern("1400405555220.png").similar(0.90), 1)).to_not raise_exception
         end
       end
       describe "overline" do
@@ -203,7 +203,7 @@ describe "Format menu", :open => :yes, :text_select => :yes do
       end
       context "after all changes", :text_select => :no, :open => :no do
         it "should be different" do
-          expect($SIKULI_SCREEN.wait(Pattern("1400408991058.png").similar(0.95), 1)).to_not raise_exception
+          expect(wait(Pattern("1400408991058.png").similar(0.95), 1)).to_not raise_exception
         end
       end
     end
@@ -227,10 +227,10 @@ describe "Format menu", :open => :yes, :text_select => :yes do
       end
       describe "tint" do
         it "should change cursor" do
-          $SIKULI_SCREEN.click("1400918584857.png")
-          $SIKULI_SCREEN.click("1400918923034.png")
-          $SIKULI_SCREEN.click("1400918629910.png")
-          expect($SIKULI_SCREEN.find("1400918702955.png")).to_not raise_exception
+          click("1400918584857.png")
+          click("1400918923034.png")
+          click("1400918629910.png")
+          expect(find("1400918702955.png")).to_not raise_exception
         end
       end
     end
